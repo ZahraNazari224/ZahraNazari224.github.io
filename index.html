@@ -1,0 +1,1438 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Zahra Nazari — Online Portfolio</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #01170b;
+      --surface: #000000;
+      --surface2: #1c1c1c;
+      --border: rgba(255,255,255,0.08);
+      --border2: rgba(255,255,255,0.14);
+      --text: #f0ede6;
+      --muted: #888;
+      --muted2: #bbb;
+      --accent: #e8c87a;
+      --accent2: #d4a843;
+      --success: #4ade80;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Outfit', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      font-size: 16px;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    .cursor {
+      width: 8px;
+      height: 8px;
+      background: var(--accent);
+      border-radius: 50%;
+      position: fixed;
+      pointer-events: none;
+      z-index: 9999;
+      transform: translate(-50%,-50%);
+      transition: transform 0.1s;
+    }
+
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.25rem 6%;
+      z-index: 100;
+      background: rgba(13,13,13,0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.1rem;
+      color: var(--accent);
+      text-decoration: none;
+      letter-spacing: 0.05em;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 1.6rem;
+      list-style: none;
+      flex-wrap: wrap;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: var(--muted);
+      font-size: 0.76rem;
+      font-weight: 400;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      transition: color 0.2s;
+      position: relative;
+    }
+
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -3px;
+      left: 0;
+      width: 0;
+      height: 1px;
+      background: var(--accent);
+      transition: width 0.25s;
+    }
+
+    .nav-links a:hover { color: var(--text); }
+    .nav-links a:hover::after { width: 100%; }
+
+    .hero {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+      padding: 0 6%;
+      padding-top: 80px;
+      gap: 4rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 60% 50% at 80% 50%, rgba(232,200,122,0.06) 0%, transparent 70%),
+        radial-gradient(ellipse 40% 40% at 20% 80%, rgba(232,200,122,0.04) 0%, transparent 60%);
+      pointer-events: none;
+    }
+
+    .hero-grid-lines {
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.015) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.015) 1px, transparent 1px);
+      background-size: 60px 60px;
+      pointer-events: none;
+    }
+
+    .hero-left, .hero-right { position: relative; z-index: 1; }
+
+    .hero-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-size: 0.72rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      font-weight: 500;
+      margin-bottom: 1.75rem;
+      padding: 0.4rem 0.9rem;
+      border: 1px solid rgba(232,200,122,0.25);
+      border-radius: 100px;
+    }
+
+    .dot {
+      width: 6px;
+      height: 6px;
+      background: var(--accent);
+      border-radius: 50%;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.5; transform: scale(0.7); }
+    }
+
+    .hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(3rem, 5.5vw, 5rem);
+      line-height: 1.05;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.5rem;
+    }
+
+    .hero h1 .first { display: block; font-weight: 400; }
+    .hero h1 .last {
+      display: block;
+      font-style: italic;
+      color: var(--accent);
+    }
+
+    .hero-role {
+      font-size: 1rem;
+      color: var(--muted2);
+      font-weight: 300;
+      margin-bottom: 1.75rem;
+      letter-spacing: 0.02em;
+    }
+
+    .hero-desc {
+      font-size: 1.0625rem;
+      color: var(--muted2);
+      font-weight: 300;
+      line-height: 1.8;
+      max-width: 500px;
+      margin-bottom: 2.5rem;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 0.8rem 2rem;
+      font-family: 'Outfit', sans-serif;
+      font-size: 0.85rem;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      text-decoration: none;
+      cursor: pointer;
+      border: none;
+      transition: all 0.25s;
+      border-radius: 3px;
+    }
+
+    .btn-gold {
+      background: var(--accent);
+      color: #0d0d0d;
+    }
+
+    .btn-gold:hover {
+      background: var(--accent2);
+      transform: translateY(-2px);
+    }
+
+    .btn-outline {
+      background: transparent;
+      border: 1px solid var(--border2);
+      color: var(--text);
+    }
+
+    .btn-outline:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+      transform: translateY(-2px);
+    }
+
+    .hero-right {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .hero-card {
+      width: 340px;
+      background: var(--surface);
+      border: 1px solid var(--border2);
+      border-radius: 16px;
+      padding: 2.5rem 2rem;
+      position: relative;
+    }
+
+    .hero-card::before {
+      content: '';
+      position: absolute;
+      top: -1px;
+      left: 30px;
+      right: 30px;
+      height: 3px;
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+      border-radius: 0 0 4px 4px;
+    }
+
+    .avatar {
+      width: 72px;
+      height: 72px;
+      background: linear-gradient(135deg, rgba(232,200,122,0.3), rgba(232,200,122,0.1));
+      border: 1px solid rgba(232,200,122,0.3);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem;
+      color: var(--accent);
+      margin-bottom: 1.25rem;
+    }
+
+    .hero-card h3 {
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin-bottom: 0.25rem;
+    }
+
+    .hero-card p {
+      font-size: 0.85rem;
+      color: var(--muted);
+      margin-bottom: 1.5rem;
+    }
+
+    .stat-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.75rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .stat {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 0.75rem 1rem;
+    }
+
+    .stat-val {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.6rem;
+      color: var(--accent);
+      line-height: 1;
+      margin-bottom: 0.2rem;
+    }
+
+    .stat-label {
+      font-size: 0.72rem;
+      color: var(--muted);
+      letter-spacing: 0.05em;
+    }
+
+    .skills-mini {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+    }
+
+    .skill-pill, .skill-chip, .course-tag, .resume-tag, .doc-tag {
+      font-size: 0.75rem;
+      padding: 0.3rem 0.7rem;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      color: var(--muted2);
+    }
+
+    .badge-float {
+      position: absolute;
+      background: var(--surface);
+      border: 1px solid var(--border2);
+      border-radius: 8px;
+      padding: 0.6rem 0.9rem;
+      font-size: 0.78rem;
+      color: var(--text);
+      white-space: nowrap;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+    }
+
+    .badge-float.b1 { top: -1rem; right: -2rem; animation: float1 4s ease-in-out infinite; }
+    .badge-float.b2 { bottom: 2rem; left: -2.5rem; animation: float2 5s ease-in-out infinite; }
+
+    @keyframes float1 {
+      0%,100% { transform: translateY(0); }
+      50% { transform: translateY(-8px); }
+    }
+
+    @keyframes float2 {
+      0%,100% { transform: translateY(0); }
+      50% { transform: translateY(6px); }
+    }
+
+    .badge-dot {
+      display: inline-block;
+      width: 6px;
+      height: 6px;
+      background: var(--success);
+      border-radius: 50%;
+      margin-right: 5px;
+    }
+
+    section { padding: 7rem 6%; }
+
+    .section-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.7rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--accent);
+      font-weight: 500;
+      margin-bottom: 0.75rem;
+    }
+
+    .section-tag::before {
+      content: '';
+      display: block;
+      width: 24px;
+      height: 1px;
+      background: var(--accent);
+    }
+
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 3.5vw, 2.75rem);
+      letter-spacing: -0.02em;
+      line-height: 1.1;
+      margin-bottom: 1rem;
+    }
+
+    .section-sub {
+      color: var(--muted2);
+      font-weight: 300;
+      font-size: 1.0625rem;
+      line-height: 1.8;
+      max-width: 650px;
+    }
+
+    #profile,
+    #resume,
+    #education,
+    #projects,
+    #contact-section {
+      border-top: 1px solid var(--border);
+    }
+
+    #education {
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .about-layout,
+    .resume-layout {
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 5rem;
+      margin-top: 4rem;
+      align-items: start;
+    }
+
+    .about-body p,
+    .resume-main p {
+      color: var(--muted2);
+      font-weight: 300;
+      line-height: 1.9;
+      font-size: 1rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .skills-section { margin-top: 2.5rem; }
+
+    .skills-section h4,
+    .resume-block h4,
+    .coursework h4,
+    .ack-group h4 {
+      font-size: 0.72rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 1rem;
+    }
+
+    .skills-grid,
+    .resume-tags,
+    .course-list,
+    .doc-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .skill-chip {
+      padding: 0.4rem 1rem;
+      background: var(--surface);
+      border: 1px solid var(--border2);
+      border-radius: 100px;
+      font-size: 0.8125rem;
+      color: var(--text);
+      transition: border-color 0.2s, color 0.2s;
+    }
+
+    .skill-chip:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    .contact-card,
+    .resume-side,
+    .ack-card {
+      background: var(--surface);
+      border: 1px solid var(--border2);
+      border-radius: 12px;
+      padding: 2rem;
+    }
+
+    .contact-card h3,
+    .resume-side h3,
+    .ack-card h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.3rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .contact-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      margin-bottom: 1.25rem;
+      color: var(--muted2);
+      font-size: 0.9rem;
+      font-weight: 300;
+    }
+
+    .contact-icon {
+      width: 32px;
+      height: 32px;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.85rem;
+      flex-shrink: 0;
+    }
+
+    .contact-item a,
+    .ack-link,
+    .resume-download {
+      color: var(--muted2);
+      text-decoration: none;
+      word-break: break-word;
+      transition: color 0.2s;
+    }
+
+    .contact-item a:hover,
+    .ack-link:hover,
+    .resume-download:hover {
+      color: var(--accent);
+    }
+
+    .resume-panel {
+      margin-top: 3rem;
+      background: var(--surface);
+      border: 1px solid var(--border2);
+      border-radius: 14px;
+      padding: 2rem;
+    }
+
+    .resume-block + .resume-block {
+      margin-top: 2rem;
+      padding-top: 2rem;
+      border-top: 1px solid var(--border);
+    }
+
+    .resume-title-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 1rem;
+      flex-wrap: wrap;
+      margin-bottom: 1rem;
+    }
+
+    .resume-title-row h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.35rem;
+    }
+
+    .resume-meta {
+      color: var(--muted);
+      font-size: 0.92rem;
+      margin-bottom: 1rem;
+    }
+
+    .resume-list {
+      list-style: none;
+      display: grid;
+      gap: 0.75rem;
+      margin-top: 1rem;
+    }
+
+    .resume-list li {
+      color: var(--muted2);
+      font-weight: 300;
+      position: relative;
+      padding-left: 1.1rem;
+      line-height: 1.8;
+    }
+
+    .resume-list li::before {
+      content: '•';
+      position: absolute;
+      left: 0;
+      color: var(--accent);
+    }
+
+    .resume-side p {
+      color: var(--muted2);
+      font-weight: 300;
+      margin-bottom: 1rem;
+      line-height: 1.8;
+    }
+
+    .resume-download {
+      display: inline-block;
+      margin-top: 1rem;
+      padding: 0.85rem 1.4rem;
+      background: rgba(232,200,122,0.08);
+      border: 1px solid rgba(232,200,122,0.25);
+      border-radius: 8px;
+      color: var(--accent);
+      font-size: 0.9rem;
+      font-weight: 500;
+    }
+
+    .edu-card {
+      margin-top: 3.5rem;
+      background: var(--bg);
+      border: 1px solid var(--border2);
+      border-radius: 12px;
+      padding: 2.5rem 3rem;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 2rem;
+      align-items: start;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .edu-card::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 4px;
+      background: linear-gradient(180deg, var(--accent), var(--accent2));
+    }
+
+    .edu-badge {
+      background: rgba(232,200,122,0.1);
+      border: 1px solid rgba(232,200,122,0.25);
+      color: var(--accent);
+      font-size: 0.75rem;
+      font-weight: 500;
+      padding: 0.35rem 0.85rem;
+      border-radius: 100px;
+      letter-spacing: 0.06em;
+      white-space: nowrap;
+      align-self: start;
+    }
+
+    .edu-school {
+      font-size: 0.8rem;
+      letter-spacing: 0.08em;
+      color: var(--accent);
+      text-transform: uppercase;
+      margin-bottom: 0.4rem;
+      font-weight: 500;
+    }
+
+    .edu-degree {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem;
+      margin-bottom: 0.4rem;
+    }
+
+    .edu-location {
+      font-size: 0.875rem;
+      color: var(--muted);
+      margin-bottom: 1.5rem;
+    }
+
+    .ack-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+      margin-top: 2.5rem;
+    }
+
+    .ack-card p {
+      color: var(--muted2);
+      font-size: 0.95rem;
+      line-height: 1.75;
+      font-weight: 300;
+      margin-bottom: 1rem;
+    }
+
+    .doc-list {
+      margin-top: 1rem;
+    }
+
+    .doc-tag {
+      border-radius: 8px;
+      padding: 0.45rem 0.75rem;
+    }
+
+    .projects-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: 3rem;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .proj-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+      transition: border-color 0.25s, transform 0.25s;
+    }
+
+    .proj-card:hover {
+      border-color: rgba(232,200,122,0.4);
+      transform: translateY(-4px);
+    }
+
+    .proj-thumb {
+      height: 200px;
+      background: linear-gradient(135deg, #1a1a1a, #222);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Playfair Display', serif;
+      font-size: 4rem;
+      color: rgba(232,200,122,0.15);
+      border-bottom: 1px solid var(--border);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .proj-thumb::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(232,200,122,0.04), transparent);
+    }
+
+    .proj-num {
+      position: absolute;
+      top: 1rem;
+      right: 1.25rem;
+      font-family: 'Playfair Display', serif;
+      font-size: 0.8rem;
+      color: var(--muted);
+      font-style: italic;
+    }
+
+    .proj-body { padding: 1.75rem; }
+
+    .proj-tech {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.35rem;
+      margin-bottom: 1rem;
+    }
+
+    .proj-tech span {
+      font-size: 0.7rem;
+      padding: 0.2rem 0.6rem;
+      background: rgba(232,200,122,0.08);
+      border: 1px solid rgba(232,200,122,0.2);
+      color: var(--accent);
+      border-radius: 3px;
+      letter-spacing: 0.04em;
+    }
+
+    .proj-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.3rem;
+      margin-bottom: 0.6rem;
+    }
+
+    .proj-desc {
+      font-size: 0.9rem;
+      color: var(--muted2);
+      font-weight: 300;
+      line-height: 1.75;
+      margin-bottom: 0.75rem;
+    }
+
+    .proj-contribution {
+      font-size: 0.8125rem;
+      color: var(--muted);
+      font-style: italic;
+      margin-bottom: 1.5rem;
+      padding-left: 0.75rem;
+      border-left: 2px solid rgba(232,200,122,0.3);
+    }
+
+    .proj-links {
+      display: flex;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+    }
+
+    .proj-link {
+      font-size: 0.8rem;
+      color: var(--accent);
+      text-decoration: none;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+      transition: opacity 0.2s;
+    }
+
+    .proj-link:hover { opacity: 0.7; }
+
+    #contact-section {
+      text-align: center;
+    }
+
+    .contact-big {
+      margin-top: 3rem;
+      background: var(--surface);
+      border: 1px solid var(--border2);
+      border-radius: 16px;
+      padding: 4rem 3rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .contact-big::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 200px;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--accent), transparent);
+    }
+
+    .contact-big p {
+      color: var(--muted2);
+      font-weight: 300;
+      max-width: 580px;
+      margin: 0 auto 2.5rem;
+      line-height: 1.8;
+    }
+
+    .contact-row {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+      margin-bottom: 2.5rem;
+    }
+
+    .contact-chip {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      padding: 0.7rem 1.25rem;
+      background: var(--surface2);
+      border: 1px solid var(--border2);
+      border-radius: 8px;
+      font-size: 0.9rem;
+      color: var(--muted2);
+      text-decoration: none;
+      transition: border-color 0.2s, color 0.2s;
+    }
+
+    .contact-chip:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    .contact-chip .ico { font-size: 1rem; }
+
+    footer {
+      background: #080808;
+      border-top: 1px solid var(--border);
+      padding: 2rem 6%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    footer p {
+      color: var(--muted);
+      font-size: 0.8125rem;
+      font-weight: 300;
+    }
+
+    .footer-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1rem;
+      color: var(--accent);
+      font-style: italic;
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.65s ease, transform 0.65s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @media (max-width: 1000px) {
+      .hero,
+      .about-layout,
+      .resume-layout {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-right {
+        display: none;
+      }
+
+      .edu-card {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 760px) {
+      nav {
+        flex-direction: column;
+        gap: 0.8rem;
+      }
+
+      .nav-links {
+        justify-content: center;
+        gap: 1rem;
+      }
+
+      .projects-header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .contact-row {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .contact-big,
+      .edu-card,
+      .resume-panel,
+      .contact-card,
+      .resume-side,
+      .ack-card {
+        padding: 1.5rem;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .hero h1 { font-size: 2.6rem; }
+      section { padding: 5.5rem 6%; }
+      .nav-links a { font-size: 0.7rem; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+
+<nav>
+  <a href="#home" class="nav-logo">║Z.N║</a>
+  <ul class="nav-links">
+    <li><a href="#profile">Profile</a></li>
+    <li><a href="#resume">Resume</a></li>
+    <li><a href="#projects">Work Samples</a></li>
+    <li><a href="#education">Education</a></li>
+    <li><a href="#contact-section">Contact</a></li>
+  </ul>
+</nav>
+
+<section class="hero" id="home">
+  <div class="hero-bg"></div>
+  <div class="hero-grid-lines"></div>
+
+  <div class="hero-left">
+    <div class="hero-eyebrow">
+      <span class="dot"></span>
+      Available for opportunities
+    </div>
+
+    <h1>
+      <span style="font-size: 30px;">Hi, I'm</span>
+      <span class="first">Zahra</span>
+      <span class="last">Nazari</span>
+    </h1>
+
+    <p class="hero-role">Computer Programming Student &amp; Aspiring Full-Stack Developer</p>
+
+    <p class="hero-desc">
+      I am a motivated Computer Programming student with hands-on experience in programming, web development,
+      SQL, troubleshooting, and collaborative project work. 
+    </p>
+
+    <div class="hero-actions">
+      <a href="#profile" class="btn btn-gold">View Profile</a>
+      <a href="#resume" class="btn btn-outline">View Resume</a>
+      <a href="resume.pdf" class="btn btn-outline" download>Download Resume</a>
+    </div>
+  </div>
+
+  <div class="hero-right">
+    <div class="badge-float b1">
+      <span class="badge-dot"></span> Open to internships
+    </div>
+
+    <div class="hero-card">
+      <div class="avatar">ZN</div>
+      <h3>Zahra Nazari</h3>
+      <p>George Brown College · Toronto</p>
+
+      <div class="stat-row">
+        <div class="stat">
+          <div class="stat-val">2+</div>
+          <div class="stat-label">Projects built</div>
+        </div>
+        <div class="stat">
+          <div class="stat-val">7+</div>
+          <div class="stat-label">Technologies</div>
+        </div>
+      </div>
+
+      <div class="skills-mini">
+        <span class="skill-pill">Java</span>
+        <span class="skill-pill">Python</span>
+        <span class="skill-pill">C#</span>
+        <span class="skill-pill">JavaScript</span>
+        <span class="skill-pill">React</span>
+        <span class="skill-pill">HTML/CSS</span>
+      </div>
+    </div>
+
+    <div class="badge-float b2">📍 Toronto, Canada</div>
+  </div>
+</section>
+
+<section id="profile">
+  <p class="section-tag">Profile</p>
+  <h2 class="section-title">Summary & Bio</h2>
+  <p class="section-sub">
+    This section introduces my background, technical interests, and career direction as a Computer Programming student.
+  </p>
+
+  <div class="about-layout reveal">
+    <div class="about-body">
+      <p>
+        My name is Zahra Nazari, and I am a Computer Programming student based in Toronto, Ontario.
+        I am building a strong foundation in programming, software development, databases, and web technologies
+        through coursework and project-based learning.
+      </p>
+
+      <p>
+        I am especially interested in web development, problem-solving, and creating applications that are clean,
+        functional, and user-focused. I enjoy learning both front-end and back-end concepts and applying them
+        through practical academic projects.
+      </p>
+
+      <p>
+        My goal is to continue developing as a full-stack developer by strengthening my skills in programming,
+        database systems, responsive design, and collaborative software development.
+      </p>
+
+      <div class="skills-section">
+        <h4>Technologies &amp; Tools</h4>
+        <div class="skills-grid">
+          <span class="skill-chip">Java</span>
+          <span class="skill-chip">Python</span>
+          <span class="skill-chip">C#</span>
+          <span class="skill-chip">PHP</span>
+          <span class="skill-chip">HTML5</span>
+          <span class="skill-chip">CSS3</span>
+          <span class="skill-chip">JavaScript</span>
+          <span class="skill-chip">SQL</span>
+          <span class="skill-chip">React</span>
+          <span class="skill-chip">PostgreSQL</span>
+          <span class="skill-chip">SQLite</span>
+          <span class="skill-chip">Git &amp; GitHub</span>
+          <span class="skill-chip">PocketBase</span>
+          <span class="skill-chip">Responsive Design</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="contact-card">
+      <h3>Contact Info</h3>
+
+      <div class="contact-item">
+        <div class="contact-icon">✉</div>
+        <div>
+          <div style="font-size:0.72rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);margin-bottom:0.2rem;">Email</div>
+          <a href="mailto:znazari595@gmail.com">znazari595@gmail.com</a>
+        </div>
+      </div>
+
+      <div class="contact-item">
+        <div class="contact-icon">📞</div>
+        <div>
+          <div style="font-size:0.72rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);margin-bottom:0.2rem;">Phone</div>
+          <span>(437) 434-4288</span>
+        </div>
+      </div>
+
+      <div class="contact-item">
+        <div class="contact-icon">in</div>
+        <div>
+          <div style="font-size:0.72rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);margin-bottom:0.2rem;">LinkedIn</div>
+          <a href="https://www.linkedin.com/in/zahra-nazari" target="_blank" rel="noopener noreferrer">linkedin.com/in/zahra-nazari</a>
+        </div>
+      </div>
+
+      <div class="contact-item">
+        <div class="contact-icon">⌂</div>
+        <div>
+          <div style="font-size:0.72rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);margin-bottom:0.2rem;">Location</div>
+          <span>North York, ON</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="resume">
+  <p class="section-tag">Skills</p>
+  <h2 class="section-title">Resume</h2>
+  <p class="section-sub">
+    This section presents my resume directly in the portfolio to align with the assignment requirements and to make my qualifications easy to review.
+  </p>
+
+  <div class="resume-layout reveal">
+    <div class="resume-main">
+      <div class="resume-panel">
+
+        <div class="resume-block">
+          <div class="resume-title-row">
+            <h3>Zahra Nazari</h3>
+            <span class="edu-badge">Resume</span>
+          </div>
+          <div class="resume-meta">
+            (437) 434-4288 ·
+            <a href="mailto:znazari595@gmail.com" style="color:var(--accent);text-decoration:none;">znazari595@gmail.com</a> ·
+            North York, ON
+          </div>
+        </div>
+
+        <div class="resume-block">
+          <h4>Objective</h4>
+          <p>
+            Motivated Computer Programming student with hands-on experience in programming, web development,
+            SQL, troubleshooting, and collaborative project work. Seeking an opportunity to apply technical knowledge,
+            problem-solving ability, and communication skills in a professional environment.
+          </p>
+        </div>
+
+        <div class="resume-block">
+          <h4>Highlights of Qualifications</h4>
+          <ul class="resume-list">
+            <li>Strong foundation in programming, web development, SQL, and software problem-solving through academic and project work.</li>
+            <li>Ability to work effectively in team environments, communicate clearly, and adapt to changing project needs.</li>
+            <li>Experience reviewing data for accuracy, maintaining organized information, and supporting project tasks with attention to detail.</li>
+            <li>Developed troubleshooting, time management, and documentation skills through coursework and hands-on assignments.</li>
+          </ul>
+        </div>
+
+        <div class="resume-block">
+          <h4>Technical Skills</h4>
+          <ul class="resume-list">
+            <li><strong>Databases:</strong> MySQL, PostgreSQL, SQLite, SQL Server (academic knowledge)</li>
+            <li><strong>Languages:</strong> SQL, C#, PHP, Java, JavaScript, HTML, CSS, Python</li>
+            <li><strong>Tools:</strong> Visual Studio, Visual Studio Code, phpMyAdmin, GitHub, cPanel, PocketBase</li>
+            <li><strong>Concepts:</strong> Relational database design, normalization, validation, testing, troubleshooting, documentation</li>
+          </ul>
+        </div>
+
+        <div class="resume-block">
+          <h4>Education</h4>
+          <div class="resume-meta">Computer Programming | January 2025 – Expected 2026</div>
+          <p>George Brown College, Toronto, Canada</p>
+          <p>
+            <strong>Relevant Coursework:</strong> Web Development Fundamentals, Object-Oriented Programming,
+            Database Management and Relational Database Design
+          </p>
+        </div>
+
+        <div class="resume-block">
+          <h4>Projects</h4>
+
+          <div class="resume-title-row">
+            <h3 style="font-size:1.05rem;">College Project – Database Lead</h3>
+          </div>
+          <ul class="resume-list">
+            <li>Worked with the backend team to design, organize, and maintain the project database.</li>
+            <li>Supported the connection between the database and the application so that the system could function properly.</li>
+            <li>Applied SQL and database design knowledge while helping solve technical issues during development.</li>
+          </ul>
+
+          <div class="resume-title-row" style="margin-top:1.5rem;">
+            <h3 style="font-size:1.05rem;">Financial Budget Tracker Application</h3>
+          </div>
+          <ul class="resume-list">
+            <li>Developed as part of college coursework to practice building responsive and functional web applications.</li>
+            <li>Focused on clean UI design, basic user interaction, and structured front-end development.</li>
+            <li><strong>Technologies Used:</strong> HTML, CSS, React, and PocketBase.</li>
+            <li>Contributed as a UI/UX designer by designing the layout, helping build the main pages, and implementing core functionality.</li>
+          </ul>
+        </div>
+
+        <div class="resume-block">
+          <h4>Experience</h4>
+
+          <div class="resume-title-row">
+            <h3 style="font-size:1.05rem;">Data Analyst Intern</h3>
+            <span class="resume-meta">Sep 2025 – Dec 2025</span>
+          </div>
+          <p>EdgeCom Energy, in person</p>
+          <ul class="resume-list">
+            <li>Analyzed and organized data using SQL and spreadsheet tools to support accurate reporting and data review.</li>
+            <li>Verified data quality by checking records for errors, missing information, and consistency issues before reports were shared with the team.</li>
+            <li>Supported database-related tasks by reviewing structured data, updating records, and helping maintain organized information for ongoing projects.</li>
+            <li>Collaborated with team members to prepare summaries, document findings, and communicate issues that affected data accuracy or reporting results.</li>
+          </ul>
+
+          <div class="resume-title-row" style="margin-top:1.5rem;">
+            <h3 style="font-size:1.05rem;">Active Team Member</h3>
+            <span class="resume-meta">Nov 2024 – Apr 2025</span>
+          </div>
+          <p>Jawana Foundation, Remote</p>
+          <ul class="resume-list">
+            <li>Responded to inquiries professionally and maintained clear communication with team members and participants.</li>
+            <li>Assisted with organizing materials and preparing information to support smooth program delivery.</li>
+            <li>Collaborated with the team to complete tasks accurately and meet deadlines in a remote setting.</li>
+            <li>Supported organized workflows and helped keep information clear, updated, and easy to follow.</li>
+          </ul>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="resume-side">
+      <h3>Resume Download</h3>
+      <a href="resume (2).pdf" class="resume-download" download>Download PDF Resume</a>
+
+      <div class="resume-block">
+        <h4 style="margin-top:2rem;">Resume Use</h4>
+        <p>
+          This portfolio includes the resume directly on the page for easier viewing, while the PDF version can be offered as an additional downloadable file.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="projects">
+  <div class="projects-header">
+    <div>
+      <p class="section-tag">Work Samples</p>
+      <h2 class="section-title">Projects & GitHub</h2>
+      <p class="section-sub">
+        This section presents work samples and technical projects that reflect my Computer Programming studies and practical development experience.
+      </p>
+    </div>
+
+    <a href="https://github.com/ZahraNazari224" target="_blank" rel="noopener noreferrer" class="btn btn-outline" style="font-size:0.8rem;padding:0.65rem 1.5rem;">GitHub →</a>
+  </div>
+
+  <div class="projects-grid">
+    <div class="proj-card reveal">
+      <div class="proj-thumb">
+        wH
+        <span class="proj-num">01</span>
+      </div>
+
+      <div class="proj-body">
+        <div class="proj-tech">
+          <span>HTML</span><span>CSS</span><span>React</span><span>PocketBase</span>
+        </div>
+
+        <h3 class="proj-title">wHealth — Budget Tracker</h3>
+
+        <p class="proj-desc">
+          A responsive financial budget tracker web application developed as part of college coursework to practice front-end development and interface design.
+        </p>
+
+        <p class="proj-contribution">
+          Role: UI/UX Designer — designed the layout, helped build the main pages, and implemented core functionality.
+        </p>
+
+        <div class="proj-links">
+          <a href="http://35.239.48.156" target="_blank" rel="noopener noreferrer" class="proj-link">Live Demo ↗</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="proj-card reveal">
+      <div class="proj-thumb">
+        DB
+        <span class="proj-num">02</span>
+      </div>
+
+      <div class="proj-body">
+        <div class="proj-tech">
+          <span>SQL</span><span>Database Design</span><span>Team Project</span>
+        </div>
+
+        <h3 class="proj-title">College Project — Database Lead</h3>
+
+        <p class="proj-desc">
+          Worked with the backend team to design, organize, and maintain the project database while supporting system functionality and issue resolution.
+        </p>
+
+        <p class="proj-contribution">
+          Role: Database Lead — supported structure, organization, and database-related technical problem-solving during development.
+        </p>
+
+        <div class="proj-links">
+          <a href="https://github.com/ZahraNazari224" target="_blank" rel="noopener noreferrer" class="proj-link">GitHub ↗</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="education">
+  <p class="section-tag">Education & Acknowledgements</p>
+  <h2 class="section-title">Academic Background & Supporting Documents</h2>
+
+  <div class="edu-card reveal">
+    <div>
+      <p class="edu-school">George Brown College</p>
+      <h3 class="edu-degree">Computer Programming</h3>
+      <p class="edu-location">Toronto, Canada · January 2025 – Expected 2026</p>
+
+      <div class="coursework">
+        <h4>Relevant Coursework</h4>
+        <div class="course-list">
+          <span class="course-tag">Web Development Fundamentals</span>
+          <span class="course-tag">Object-Oriented Programming</span>
+          <span class="course-tag">Database Management</span>
+          <span class="course-tag">Relational Database Design</span>
+          <span class="course-tag">SQL &amp; Application Development</span>
+          <span class="course-tag">Testing &amp; Troubleshooting</span>
+          <span class="course-tag">Technical Documentation</span>
+        </div>
+      </div>
+
+      <p style="margin-top:1.5rem;color:var(--muted2);font-weight:300;font-size:0.9375rem;line-height:1.8;">
+        My education has provided a strong foundation in software development, programming logic,
+        web technologies, and database concepts through practical assignments and project work.
+      </p>
+    </div>
+
+    <div class="edu-badge">Diploma · 2026</div>
+  </div>
+
+  <div class="ack-grid reveal">
+    <div class="ack-card">
+      <h3>Certificate</h3>
+      <p>
+        This certificate highlights additional learning and practical development knowledge that supports my Computer Programming studies.
+      </p>
+
+      <div class="ack-group">
+        <a href="certificate.png" class="ack-link" download>Download Certificate</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="contact-section">
+  <p class="section-tag">Contact</p>
+  <h2 class="section-title">Get in Touch</h2>
+
+  <div class="contact-big reveal">
+    <p>
+      I am currently open to internship opportunities and entry-level roles where I can continue building my technical skills and contribute to real-world software development work.
+    </p>
+
+    <div class="contact-row">
+      <a href="mailto:znazari595@gmail.com" class="contact-chip">
+        <span class="ico">✉</span> znazari595@gmail.com
+      </a>
+
+      <a href="https://www.linkedin.com/in/zahra-nazari-3baa3a341" target="_blank" rel="noopener noreferrer" class="contact-chip">
+        <span class="ico">in</span> LinkedIn
+      </a>
+
+      <a href="https://github.com/ZahraNazari224" target="_blank" rel="noopener noreferrer" class="contact-chip">
+        <span class="ico">⌥</span> GitHub
+      </a>
+
+      <a href="tel:4374344288" class="contact-chip">
+        <span class="ico">📞</span> (437) 434-4288
+      </a>
+    </div>
+
+    <a href="mailto:znazari595@gmail.com" class="btn btn-gold">Say Hello →</a>
+  </div>
+</section>
+
+<footer>
+  <span class="footer-logo">║Z.N║</span>
+  <p>© 2026 Zahra Nazari · Toronto, Canada</p>
+  <a href="#home" style="color:var(--muted);font-size:0.8125rem;text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='var(--muted)'">Back to top ↑</a>
+</footer>
+
+<script>
+  const cursor = document.getElementById('cursor');
+  document.addEventListener('mousemove', e => {
+    cursor.style.left = e.clientX + 'px';
+    cursor.style.top = e.clientY + 'px';
+  });
+
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) e.target.classList.add('visible');
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('.nav-links a');
+
+  window.addEventListener('scroll', () => {
+    let current = '';
+    sections.forEach(s => {
+      if (window.scrollY >= s.offsetTop - 120) current = s.id;
+    });
+
+    navLinks.forEach(a => {
+      a.style.color = a.getAttribute('href') === '#' + current ? 'var(--accent)' : '';
+    });
+  });
+</script>
+</body>
+</html>
